@@ -20,8 +20,18 @@ export class ConsultaController {
     return this.consultaService.createConsulta(consulta);
   }
 
-  @Get(':id/consultaPsicologo')
+  @Get()
+  findAll() {
+    return this.consultaService.findAll();
+  }
+
+  @Get(':id')
   findOne(@Param('id') id: string) {
+    return this.consultaService.findOne(id);
+  }
+
+  @Get(':id/consultaPsicologo')
+  findOneProfissional(@Param('id') id: string) {
     return this.consultaService.findConsultaByProfissional(id);
   }
 

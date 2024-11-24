@@ -24,6 +24,11 @@ export class ConsultaService {
         return this.consultaRepository.findOne({where: {id : id.toString()}});
     }
 
+    async findAll() 
+    {
+        return this.consultaRepository.find();
+    }
+
     async findList()
     {
         return this.consultaRepository.find();
