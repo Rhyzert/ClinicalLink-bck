@@ -19,11 +19,11 @@ export class SupervisorService {
   }
 
   async findAll() {
-    return `This action returns all supervisor`;
+    return this.supervisorRepository.find();
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} supervisor`;
+  async findOne(id: string) {
+    return this.supervisorRepository.findOne(id);
   }
 
   async findEstagiarios(supervisorUsuario: string) {

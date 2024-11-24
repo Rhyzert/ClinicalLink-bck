@@ -19,11 +19,11 @@ export class DetalhesProfissionaisService {
   }
 
   findAll() {
-    return [];
+    return this.detalhesProfissionaisRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} detalhesProfissionais`;
+    return this.detalhesProfissionaisRepository.findOne({where: {id : id.toString()}});;
   }
 
   update(

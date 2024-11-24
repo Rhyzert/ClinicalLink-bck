@@ -29,7 +29,7 @@ export class SupervisorController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.supervisorService.findOne(+id);
+    return this.supervisorService.findOne(id);
   }
 
   @Get(':id/estagiarios')
