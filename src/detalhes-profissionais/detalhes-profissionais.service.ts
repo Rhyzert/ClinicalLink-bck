@@ -22,7 +22,7 @@ export class DetalhesProfissionaisService {
     return this.detalhesProfissionaisRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.detalhesProfissionaisRepository.findOne({where: {id : id.toString()}});;
   }
 

@@ -23,7 +23,7 @@ export class SupervisorService {
   }
 
   async findOne(id: string) {
-    return this.supervisorRepository.findOne(id);
+    return this.supervisorRepository.findOne({where: {id : id.toString()}});
   }
 
   async findEstagiarios(supervisorUsuario: string) {

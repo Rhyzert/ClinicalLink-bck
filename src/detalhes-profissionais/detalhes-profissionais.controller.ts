@@ -34,7 +34,7 @@ export class DetalhesProfissionaisController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.detalhesProfissionaisService.findOne(+id);
+    return this.detalhesProfissionaisService.findOne(id);
   }
 
   @Patch(':id')
