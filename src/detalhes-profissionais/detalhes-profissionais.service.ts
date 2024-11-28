@@ -4,6 +4,7 @@ import { UpdateDetalhesProfissionaisDto } from './dto/update-detalhes-profission
 import { InjectRepository } from '@nestjs/typeorm';
 import { DetalhesProfissionais } from './entities/detalhes-profissionais.entity';
 import { Repository } from 'typeorm';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 @Injectable()
 export class DetalhesProfissionaisService {
@@ -25,6 +26,15 @@ export class DetalhesProfissionaisService {
   findOne(id: string) {
     return this.detalhesProfissionaisRepository.findOne({where: {id : id.toString()}});;
   }
+  async findDetalhesByIdUsuario(idUsuario: string): Promise<DetalhesProfissionais[]> 
+  {
+      return this.detalhesProfissionaisRepository
+      .createQueryBuilder('detalhesprofissionais')
+      .innerJoinAndSelect('detalhesprofissionais.usuario', 'usuario') 
+      .where('usuario.id = :idUsuario', { idUsuario })  
+      .getMany();
+  }
+
 
   update(
     id: string,
@@ -37,6 +47,6 @@ export class DetalhesProfissionaisService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} detalhesProfissionais`;
+    this.detalhesProfissionaisRepository.delete(id);;
   }
 }

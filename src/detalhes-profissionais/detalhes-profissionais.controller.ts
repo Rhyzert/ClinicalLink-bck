@@ -37,6 +37,11 @@ export class DetalhesProfissionaisController {
     return this.detalhesProfissionaisService.findOne(id);
   }
 
+  @Get('detalhesusuario/:id')
+  findDetalhesByIdUsuario(@Param('id') id: string) {
+    return this.detalhesProfissionaisService.findDetalhesByIdUsuario(id);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,

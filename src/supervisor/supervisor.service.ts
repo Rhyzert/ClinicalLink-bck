@@ -35,13 +35,23 @@ export class SupervisorService {
       .where('psicologo.id = :supervisorUsuario', { supervisorUsuario }) 
       .getMany();
   }
+
+  async findSupervisaoByIdEstagiario(estagiarioId: string) {
+    return this.supervisorRepository
+      .createQueryBuilder('supervisor')
+      .innerJoinAndSelect('supervisor.estagiario', 'estagiario') 
+      .innerJoin('supervisor.psicologo', 'psicologo') 
+      .innerJoinAndSelect('supervisor.universidade', 'universidade')
+      .where('estagiario.id = :estagiarioId', { estagiarioId }) 
+      .getMany();
+  }
   
 
   update(id: number, updateSupervisorDto: UpdateSupervisorDto) {
-    return `This action updates a #${id} supervisor`;
+    return this.supervisorRepository.update(id, updateSupervisorDto);;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} supervisor`;
+  remove(id: string) {
+    return this.supervisorRepository.delete(id);
   }
 }

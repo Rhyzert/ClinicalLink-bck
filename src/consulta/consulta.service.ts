@@ -54,7 +54,7 @@ export class ConsultaService {
     updateConsulta(id: string, updateAvaliacao: UpdateConsultaDto) 
     {
         return this.consultaRepository.update(id, updateAvaliacao);
-      }
+    }
     
     async delete(id: string): Promise<void> 
     {

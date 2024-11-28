@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Servico } from './entities/servico.entity';
+import { UpdateServicoDto } from './dto/update-servico.dto';
 
 @Injectable()
 export class ServicoService {
@@ -23,8 +24,9 @@ export class ServicoService {
     return this.servicoRepository.findOne({ where: { id } });
   }
 
-  update(id: string, data: Partial<Servico>) {
-    return this.servicoRepository.update(id, data);
+  update(id: string, updateServico: UpdateServicoDto) 
+  {
+      return this.servicoRepository.update(id, updateServico);
   }
 
   remove(id: string) {
