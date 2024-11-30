@@ -6,14 +6,18 @@ import {
   Param,
   Patch,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UsuarioServicoService } from './usuario-servico.service';
 import { CreateUsuarioServicoDto } from './dto/create-usuario-servico.dto';
 import { UpdateUsuarioServicoDto } from './dto/update-usuario-servico.dto';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 
-@ApiTags('usuarios-servicos')
-@Controller('usuarios-servicos')
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
+@ApiTags('usuario-servico')
+@Controller('usuario-servico')
 export class UsuarioServicoController {
   constructor(private readonly usuarioServicoService: UsuarioServicoService) {}
 

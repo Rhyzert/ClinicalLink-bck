@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { AvaliacaoService } from './avaliacao.service';
-import { Avaliacao } from './entities/avaliacao.entity';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateAvaliacaoDto } from './dto/create-avaliacao.dto';
-
+import { AuthGuard } from 'src/auth/guard/auth.guard';
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
 @ApiTags('avaliacao')
 @Controller('avaliacao')
 export class AvaliacaoController {
@@ -33,7 +35,10 @@ export class AvaliacaoController {
   }
 
   @Patch(':id')
-  updateAvaliacao(@Param('id') id: string, @Body() avaliacaoUpdate: CreateAvaliacaoDto) {
+  updateAvaliacao(
+    @Param('id') id: string,
+    @Body() avaliacaoUpdate: CreateAvaliacaoDto,
+  ) {
     return this.avaliacaoService.updateAvaliacao(id, avaliacaoUpdate);
   }
 

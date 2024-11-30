@@ -6,14 +6,18 @@ import {
   Param,
   Patch,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UniversidadeService } from './universidade.service';
 import { CreateUniversidadeDto } from './dto/create-universidade.dto';
 import { UpdateUniversidadeDto } from './dto/update-universidade.dto';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 
-@ApiTags('universidades')
-@Controller('universidades')
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
+@ApiTags('universidade')
+@Controller('universidade')
 export class UniversidadeController {
   constructor(private readonly universidadeService: UniversidadeService) {}
 

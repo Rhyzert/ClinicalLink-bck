@@ -1,15 +1,11 @@
-import { Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete, } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { ConsultaService } from './consulta.service';
-import { Consulta } from './entities/consulta.entity';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateConsultaDto } from './dto/create-consulta.dto';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
 @ApiTags('consulta')
 @Controller('consulta')
 export class ConsultaController {
@@ -34,6 +30,4 @@ export class ConsultaController {
   findOneProfissional(@Param('id') id: string) {
     return this.consultaService.findConsultaByProfissional(id);
   }
-
 }
-

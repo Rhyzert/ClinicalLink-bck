@@ -34,8 +34,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get()
   getProfile(@User() user: any) {
-    return user; 
+    return user;
   }
-
-  
 }
