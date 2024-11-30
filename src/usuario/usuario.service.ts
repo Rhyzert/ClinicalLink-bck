@@ -31,7 +31,7 @@ export class UsuarioService {
     return this.usuarioRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.usuarioRepository.findOne({ where: { id: id.toString() } });
   }
 
@@ -62,4 +62,5 @@ export class UsuarioService {
   remove(id: number) {
     return `This action removes a #${id} usuario`;
   }
+
 }

@@ -5,11 +5,15 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Get,
   Response,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiTags } from '@nestjs/swagger';
 import { SignInDto } from './dto/signIn-dto.dto';
+import { JwtAuthGuard } from './jwt-auth.guard';
+import { User } from './user.decorator';
 
 @Controller('authenticate')
 @ApiTags('authenticate')
@@ -26,4 +30,12 @@ export class AuthController {
     res.setHeader('Authorization', `Bearer ${token}`).json(token);
     res.send();
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  getProfile(@User() user: any) {
+    return user; 
+  }
+
+  
 }
