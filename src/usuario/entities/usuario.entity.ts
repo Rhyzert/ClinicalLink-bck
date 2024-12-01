@@ -1,4 +1,5 @@
 import { DetalhesProfissionais } from 'src/detalhes-profissionais/entities/detalhes-profissionais.entity';
+import { CidadeEstado } from 'src/cidade-estado/entities/cidade-estado.entity';
 import { TipoUsuario } from 'src/enums/tipo-usuario.enum';
 import {
   BeforeInsert,
@@ -9,6 +10,7 @@ import {
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
+  JoinColumn
 } from 'typeorm';
 import { Consulta } from 'src/consulta/entities/consulta.entity';
 import { Universidade } from 'src/universidade/entities/universidade.entity';
@@ -64,6 +66,13 @@ export class Usuario {
     nullable: true,
   })
   universidade: Universidade;
+
+  @ManyToOne(() => CidadeEstado, (cidadeestado) => cidadeestado.usuarios,{
+    nullable: true,
+  })
+  @JoinColumn({ name: 'cidade_estado_id' })
+  cidadeEstado: CidadeEstado;
+
 
   @OneToMany(() => Consulta, (consulta) => consulta.paciente)
   consultas: Consulta[];

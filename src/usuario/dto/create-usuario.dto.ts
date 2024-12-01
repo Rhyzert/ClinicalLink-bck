@@ -10,6 +10,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { TipoUsuario } from 'src/enums/tipo-usuario.enum';
 import { Genero } from 'src/enums/genero.enum';
 import { CreateDetalhesProfissionaisDto } from 'src/detalhes-profissionais/dto/create-detalhes-profissionais.dto';
+import { CidadeEstado } from 'src/cidade-estado/entities/cidade-estado.entity';
+import { CreateCidadeEstadoDto } from 'src/cidade-estado/dto/create-cidade-estado.dto';
 
 export class CreateUsuarioDto {
   @ApiProperty({ description: 'Nome do usuário', example: 'Silva' })
@@ -68,6 +70,10 @@ export class CreateUsuarioDto {
   @IsNotEmpty()
   @IsString()
   dataNascimento: string;
+
+  @ApiProperty({ type: CreateCidadeEstadoDto, required: false})
+  @IsNotEmpty()
+  cidadeestado: CidadeEstado;
 
   @ApiProperty({ type: CreateDetalhesProfissionaisDto, required: false })
   @IsOptional()
