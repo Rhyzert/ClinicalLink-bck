@@ -22,6 +22,14 @@ export class UpdateUsuarioDto  {
     cpf?: string;
 
     @ApiProperty({
+      description: 'Email do usuário',
+      required: false,
+    })
+    @IsOptional()
+    @IsString()
+    email?: string;
+
+    @ApiProperty({
         description: 'Genero',
         required: false,
       })
