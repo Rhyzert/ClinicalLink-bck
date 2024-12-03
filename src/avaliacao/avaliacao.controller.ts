@@ -3,48 +3,51 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
+  Patch,
   Delete,
+  HttpCode,
+  HttpStatus,
   UseGuards,
 } from '@nestjs/common';
 import { AvaliacaoService } from './avaliacao.service';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateAvaliacaoDto } from './dto/create-avaliacao.dto';
+import { UpdateAvaliacaoDto } from './dto/update-avaliacao.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
-
 @UseGuards(AuthGuard)
 @ApiBearerAuth()
-@ApiTags('avaliacao')
+@ApiTags('consulta')
 @Controller('avaliacao')
 export class AvaliacaoController {
   constructor(private readonly avaliacaoService: AvaliacaoService) {}
 
   @Post()
-  create(@Body() createAvaliacaoDto: CreateAvaliacaoDto) {
+  async create(@Body() createAvaliacaoDto: CreateAvaliacaoDto) {
     return this.avaliacaoService.create(createAvaliacaoDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.avaliacaoService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.avaliacaoService.findOne(id);
   }
 
   @Patch(':id')
-  updateAvaliacao(
+  async update(
     @Param('id') id: string,
-    @Body() avaliacaoUpdate: CreateAvaliacaoDto,
+    @Body() updateAvaliacaoDto: UpdateAvaliacaoDto,
   ) {
-    return this.avaliacaoService.updateAvaliacao(id, avaliacaoUpdate);
+    return this.avaliacaoService.update(id, updateAvaliacaoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.avaliacaoService.delete(id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id') id: string) {
+    return this.avaliacaoService.remove(id);
   }
 }

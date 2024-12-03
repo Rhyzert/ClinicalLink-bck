@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Avaliacao } from '../avaliacao/entities/avaliacao.entity';
 import { Repository } from 'typeorm';
+import { Avaliacao } from './entities/avaliacao.entity';
 import { CreateAvaliacaoDto } from './dto/create-avaliacao.dto';
+import { UpdateAvaliacaoDto } from './dto/update-avaliacao.dto';
 
 @Injectable()
 export class AvaliacaoService {
@@ -11,24 +12,41 @@ export class AvaliacaoService {
     private readonly avaliacaoRepository: Repository<Avaliacao>,
   ) {}
 
-  create(avaliacaoDto: CreateAvaliacaoDto) {
-    const user = this.avaliacaoRepository.create(avaliacaoDto);
-    return this.avaliacaoRepository.save(user);
+  async create(createAvaliacaoDto: CreateAvaliacaoDto): Promise<Avaliacao> {
+    const avaliacao = this.avaliacaoRepository.create(createAvaliacaoDto);
+    return this.avaliacaoRepository.save(avaliacao);
   }
 
-  async findOne(id: string) {
-    return this.avaliacaoRepository.findOne({ where: { id: id.toString() } });
+  async findAll(): Promise<Avaliacao[]> {
+    return this.avaliacaoRepository.find({ relations: ['consulta'] });
   }
 
-  findAll() {
-    return this.avaliacaoRepository.find();
+  async findOne(id: string): Promise<Avaliacao> {
+    const avaliacao = await this.avaliacaoRepository.findOne({
+      where: { id },
+      relations: ['consulta'],
+    });
+
+    if (!avaliacao) {
+      throw new NotFoundException(`Avaliação com ID ${id} não encontrada.`);
+    }
+
+    return avaliacao;
   }
 
-  updateAvaliacao(id: string, updateAvaliacao: CreateAvaliacaoDto) {
-    return this.avaliacaoRepository.update(id, updateAvaliacao);
+  async update(
+    id: string,
+    updateAvaliacaoDto: UpdateAvaliacaoDto,
+  ): Promise<Avaliacao> {
+    const avaliacao = await this.findOne(id);
+
+    Object.assign(avaliacao, updateAvaliacaoDto);
+
+    return this.avaliacaoRepository.save(avaliacao);
   }
 
-  async delete(id: string): Promise<void> {
-    this.avaliacaoRepository.delete(id);
+  async remove(id: string): Promise<void> {
+    const avaliacao = await this.findOne(id);
+    await this.avaliacaoRepository.remove(avaliacao);
   }
 }
