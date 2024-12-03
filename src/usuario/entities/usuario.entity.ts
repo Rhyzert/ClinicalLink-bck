@@ -10,7 +10,7 @@ import {
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 import { Consulta } from 'src/consulta/entities/consulta.entity';
 import { Universidade } from 'src/universidade/entities/universidade.entity';
@@ -67,12 +67,13 @@ export class Usuario {
   })
   universidade: Universidade;
 
-  @ManyToOne(() => CidadeEstado, (cidadeestado) => cidadeestado.usuarios,{
+  @ManyToOne(() => CidadeEstado, (cidadeestado) => cidadeestado.usuarios, {
     nullable: true,
   })
   @JoinColumn({ name: 'cidade_estado_id' })
   cidadeEstado: CidadeEstado;
 
+  agenda: any;
 
   @OneToMany(() => Consulta, (consulta) => consulta.paciente)
   consultas: Consulta[];

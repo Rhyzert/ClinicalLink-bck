@@ -55,6 +55,31 @@ export class UsuarioService {
     });
   }
 
+  async findAllProfissionais() {
+    const profissionais = await this.usuarioRepository.find({
+      where: [
+        { tipoUsuario: TipoUsuario.PSICOLOGO },
+        { tipoUsuario: TipoUsuario.ESTAGIARIO },
+      ],
+      relations: ['detalhesProfissionais', 'consultas'],
+    });
+
+    profissionais.forEach((x) => {
+      x.agenda = [
+        {
+          data: '2024-12-03',
+          horas: ['08:00', '09:00', '10:00', '14:00'],
+        },
+        {
+          data: '2024-12-04',
+          horas: ['09:00', '11:00', '15:00', '16:00'],
+        },
+      ];
+    });
+
+    return profissionais;
+  }
+
   async update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
     const usuario = await this.usuarioRepository.findOne({ where: { id } });
     if (!usuario) {

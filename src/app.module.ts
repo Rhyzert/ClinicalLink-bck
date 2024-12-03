@@ -11,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DetalhesProfissionaisModule } from './detalhes-profissionais/detalhes-profissionais.module';
 import { UsuarioServicoModule } from './usuario-servico/usuario-servico.module';
 import { AuthModule } from './auth/auth.module';
+import { AgendaModule } from './agenda/agenda.module';
 import { CidadeEstadoModule } from './cidade-estado/cidade-estado.module';
 
 @Module({
@@ -37,6 +38,7 @@ import { CidadeEstadoModule } from './cidade-estado/cidade-estado.module';
     DetalhesProfissionaisModule,
     UsuarioServicoModule,
     AuthModule,
+    AgendaModule,
     CidadeEstadoModule,
   ],
 })

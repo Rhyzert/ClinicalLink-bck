@@ -32,6 +32,11 @@ export class UsuarioController {
     return this.usuarioService.findOne(req.user.id);
   }
 
+  @Get('profissionais')
+  async getAllProfissionais() {
+    return await this.usuarioService.findAllProfissionais();
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,

@@ -12,6 +12,7 @@ import { AvaliacaoService } from './avaliacao.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateAvaliacaoDto } from './dto/create-avaliacao.dto';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
+
 @UseGuards(AuthGuard)
 @ApiBearerAuth()
 @ApiTags('avaliacao')
