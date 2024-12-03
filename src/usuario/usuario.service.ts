@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -55,8 +55,13 @@ export class UsuarioService {
     });
   }
 
-  update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
-    return this.usuarioRepository.update(id, updateUsuarioDto);
+  async update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
+    const usuario = await this.usuarioRepository.findOne({ where: { id } });
+    if (!usuario) {
+      throw new NotFoundException(`Usuário com ID ${id} não encontrado.`);
+    }
+    Object.assign(usuario, updateUsuarioDto); // Atualiza apenas os campos enviados
+    return this.usuarioRepository.save(usuario); // Salva no banco
   }
 
   remove(id: number) {
