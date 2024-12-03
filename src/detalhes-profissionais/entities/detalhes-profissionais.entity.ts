@@ -37,6 +37,9 @@ export class DetalhesProfissionais {
   @Column({ name: 'local_trabalho_long', type: 'double', nullable: true })
   localTrabalhoLong: number;
 
+  @Column({ name: 'tempo_sessao', type: 'int', nullable: true })
+  tempoSessao: number;
+
   @CreateDateColumn({ name: 'criado_em', type: 'timestamp' })
   criadoEm: Date;
 }

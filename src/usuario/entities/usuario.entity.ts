@@ -65,6 +65,8 @@ export class Usuario {
   })
   universidade: Universidade;
 
+  agenda: any;
+
   @OneToMany(() => Consulta, (consulta) => consulta.paciente)
   consultas: Consulta[];
 
